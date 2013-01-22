@@ -38,7 +38,7 @@ module Spree
 
 
       # :amount, :currency, :test, :credential2, :credential3, :credential4, :country, :account_name, :transaction_type
-      spf = BillingIntegration::Sagepayform.new()
+      # spf = BillingIntegration::Sagepayform.new()
 
 
       spfh = ActiveMerchant::Billing::Integrations::SagePayForm::Helper.new(@order, "tubchairs123")
