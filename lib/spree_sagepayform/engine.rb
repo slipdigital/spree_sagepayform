@@ -17,7 +17,7 @@ module SpreeSagepayform
       end
 
       config.after_initialize do |app|
-        app.config.spree.payment_methods += [BillingIntegration::Sagepayform]
+        app.config.spree.payment_methods += [Spree::BillingIntegration::Sagepayform]
       end
     end
 

@@ -1,4 +1,4 @@
-class Sagepayform < Spree::BillingIntegration
+class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
   preference :login, :string
   # preference :password, :string
   preference :encryption_key, :string
@@ -29,3 +29,4 @@ class Sagepayform < Spree::BillingIntegration
 
 
 end
+

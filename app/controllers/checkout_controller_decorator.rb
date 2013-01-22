@@ -102,7 +102,7 @@ Spree::CheckoutController.class_eval do
   def redirect_for_sagepayform
     return unless params[:state] == "payment"
     @payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
-    if @payment_method && @payment_method.kind_of?(BillingIntegration::Sagepayform)
+    if @payment_method && @payment_method.kind_of?(Spree::BillingIntegration::Sagepayform)
 
       @order.update_attributes(object_params)
       redirect_to sagepayform_show_path(:order_id => @order.id, :payment_method_id => @payment_method.id)
