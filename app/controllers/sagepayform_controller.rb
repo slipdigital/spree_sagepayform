@@ -2,6 +2,7 @@ module Spree
 
 
   class SagepayformController < ApplicationController
+
     skip_before_filter :verify_authenticity_token, :only => [:comeback, :comeback_s2s]
 
     def show
