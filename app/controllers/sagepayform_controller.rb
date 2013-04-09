@@ -40,7 +40,7 @@ module Spree
       # :amount, :currency, :test, :credential2, :credential3, :credential4, :country, :account_name, :transaction_type
       spf = Spree::BillingIntegration::Sagepayform.new()
 
-      spfh = ActiveMerchant::Billing::Integrations::SagePayForm::Helper.new(@order, "tubchairs123")
+      spfh = ActiveMerchant::Billing::Integrations::SagePayForm::Helper.new(@order, @payment_method.preferred_login)
 
       #
       spfh.add_field("EncryptKey", @payment_method.preferred_encryption_key)

@@ -4,7 +4,7 @@ class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
   preference :encryption_key, :string
 
   # attr_accessible :preferred_login, :preferred_password, :preferred_server, :preferred_test_mode, :encryption_key
-  attr_accessible :preferred_login, :preferred_server, :preferred_test_mode, :preferred_encryption_key
+  attr_accessible :preferred_login, :preferred_server, :preferred_test_mode, :preferred_encryption_key, :preferred_notification_email
 
 
   def provider_class
