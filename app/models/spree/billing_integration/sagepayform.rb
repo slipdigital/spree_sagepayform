@@ -7,7 +7,6 @@ class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
   # attr_accessible :preferred_login, :preferred_password, :preferred_server, :preferred_test_mode, :encryption_key
   attr_accessible :preferred_login, :preferred_server, :preferred_test_mode, :preferred_encryption_key, :preferred_notification_email
 
-
   def provider_class
     ActiveMerchant::Billing::Integrations::SagePayForm
   end
@@ -27,7 +26,6 @@ class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
   def source_required?
     false
   end
-
-
 end
+
 
