@@ -163,9 +163,6 @@ module Spree
       end
     end
 
-
     private
-
-
   end
 end
