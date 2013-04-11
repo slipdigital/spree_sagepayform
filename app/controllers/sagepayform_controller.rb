@@ -67,7 +67,7 @@ module Spree
       spfh.add_field("VendorEMail", "sales@tubchairs.com")
       spfh.add_field("SendEMail", "1")
 
-      spfh.add_field("CustomerName", @order.bill_address.firstname + " " + @order.bill_address.firstname)
+      spfh.add_field("CustomerName", @order.bill_address.firstname + " " + @order.bill_address.lastname)
       spfh.add_field("CustomerEmail", @order.email)
 
       spfh.add_field("BillingSurname", @order.bill_address.lastname)
