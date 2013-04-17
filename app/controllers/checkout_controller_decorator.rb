@@ -86,6 +86,8 @@ Spree::CheckoutController.class_eval do
       end
 
       flash.notice = t(:order_processed_successfully)
+      flash[:commerce_tracking] = "nothing special"
+
       # raise "order found, order updated "
       redirect_to completion_route
     else
