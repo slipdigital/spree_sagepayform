@@ -62,10 +62,10 @@ module Spree
 
       spfh.add_field("SuccessURL", "#{request.protocol}#{request.host_with_port}/sagepayform/comeback?pmid=" + @payment_method.id.to_s)
       spfh.add_field("FailureURL", "#{request.protocol}#{request.host_with_port}/sagepayform/payment_failure")
-      spfh.add_field("VendorEMail", "sales@tubchairs.com")
+      spfh.add_field("VendorEMail", @payment_method.preferred_notification_email)
       spfh.add_field("SendEMail", "1")
 
-      spfh.add_field("CustomerName", @order.bill_address.firstname + " " + @order.bill_address.firstname)
+      spfh.add_field("CustomerName", @order.bill_address.firstname + " " + @order.bill_address.lastname)
       spfh.add_field("CustomerEmail", @order.email)
 
       spfh.add_field("BillingSurname", @order.bill_address.lastname)
