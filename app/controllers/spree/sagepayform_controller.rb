@@ -79,14 +79,31 @@ module Spree
       spfh.add_field("BillingState", "")
       spfh.add_field("BillingPhone", @order.bill_address.phone)
 
+      # mapping :shipping_address,
+      #         :city     => 'DeliveryCity',
+      #         :address1 => 'DeliveryAddress1',
+      #         :address2 => 'DeliveryAddress2',
+      #         :state    => 'DeliveryState',
+      #         :zip      => 'DeliveryPostCode',
+      #         :country  => 'DeliveryCountry'
+
+      spfh.shipping_address({
+                                :city => @order.ship_address.city,
+                                :address1 => @order.ship_address.address1,
+                                :address2 => @order.ship_address.address2,
+                                :state => '',
+                                :zip => @order.ship_address.zipcode,
+                                :country  => @order.ship_address.country.iso
+                            })
+
       spfh.add_field("DeliverySurname", @order.ship_address.lastname)
       spfh.add_field("DeliveryFirstnames", @order.ship_address.firstname)
-      spfh.add_field("DeliveryAddress1", @order.ship_address.address1)
-      spfh.add_field("DeliveryAddress2", @order.ship_address.address2)
-      spfh.add_field("DeliveryCity", @order.ship_address.city)
-      spfh.add_field("DeliveryPostCode", @order.ship_address.zipcode)
-      spfh.add_field("DeliveryCountry", @order.ship_address.country.iso)
-      spfh.add_field("DeliveryState", "")
+      # spfh.add_field("DeliveryAddress1", @order.ship_address.address1)
+      # spfh.add_field("DeliveryAddress2", @order.ship_address.address2)
+      # spfh.add_field("DeliveryCity", @order.ship_address.city)
+      # spfh.add_field("DeliveryPostCode", @order.ship_address.zipcode)
+      # spfh.add_field("DeliveryCountry", @order.ship_address.country.iso)
+      # spfh.add_field("DeliveryState", "")
       spfh.add_field("DeliveryPhone", @order.ship_address.phone)
 
       str_basket = (@order.line_items.count + 1).to_s + ":"
@@ -116,34 +133,23 @@ module Spree
       spfh.add_field("Apply3DSecure", "2")
       spfh.add_field("BillingAgreement", "0")
 
-      # raise spfh.form_fields.to_yaml
       # raise @payment_method.preferred_encryption_key
 
       spf_url = service_url(@payment_method) + spf.redirect_url(spfh)
 
-      # raise spf.provider.to_yaml
-
-      #t = Sage::TransactionData.new(
-      #    :amount => @order.total,
-      #    :currency => 242,
-      #    :shop_transaction_id => @order.number
-      #)
+      # raise spfh.shipping_address_set
 
       redirect_to spf_url
-
-      # Get the first encryption
-      # t = c.encrypt(t)
-      # Check for errors
-      #unless t[:error_code].nil?
-      #  flash[:error] = "ERROR on first encryption. #{t[:error_code]} / #{t.inspect}"
-      #  redirect_to spf_url
-      #end
-      ## Dati per il form
-      #@a = @shop_login
-      #@b = t[:encrypted_str]
-      #@form_url = (@server == 'test') ? "https://testecomm.sella.it/gestpay/pagam.asp" : "https://ecomm.sella.it/gestpay/pagam.asp"
-
     end
+
+    def get_enc_string
+
+        parts = fields.map { |k, v| "#{k}=#{sanitize(k, v)}" unless v.nil? }.compact.shuffle
+        parts.unshift(sage_encrypt_salt(key.length, key.length * 2))
+        sage_encrypt(parts.join('&'), key)
+
+end
+
 
     def service_url(payment_method)
       mode = payment_method.preferred_server
