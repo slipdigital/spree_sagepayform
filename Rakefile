@@ -13,3 +13,7 @@ task :test_app do
   ENV['LIB_NAME'] = 'spree_sagepayform'
   Rake::Task['common:test_app'].invoke
 end
+
+task :console do
+  sh 'irb -rubygems -I lib -r spree_sagepayform.rb'
+end

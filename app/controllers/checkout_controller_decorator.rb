@@ -16,7 +16,7 @@ Spree::CheckoutController.class_eval do
     end
 
     # Get paymnt method
-    decrypted_data = parse_decrypted_string(decrypt_response(Base64.decode64(params["crypt"].gsub(' ', '+')), payment_method.preferred_encryption_key))
+    decrypted_data = parse_decrypted_string(SagepayProtocol3::Encryption.decrypt(payment_method.preferred_encryption_key, params['crypt']))
 
     # raise decrypted_data.to_yaml
 

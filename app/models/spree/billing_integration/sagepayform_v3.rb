@@ -1,4 +1,4 @@
-class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
+class Spree::BillingIntegration::SagepayformV3 < Spree::BillingIntegration
   preference :login, :string
   # preference :password, :string
   preference :encryption_key, :string
@@ -8,7 +8,7 @@ class Spree::BillingIntegration::Sagepayform < Spree::BillingIntegration
   attr_accessible :preferred_login, :preferred_server, :preferred_test_mode, :preferred_encryption_key, :preferred_notification_email
 
   def provider_class
-    ActiveMerchant::Billing::Integrations::SagePayForm
+    ActiveMerchant::Billing::Integrations::SagePayFormV3
   end
 
   def redirect_url(spfh)

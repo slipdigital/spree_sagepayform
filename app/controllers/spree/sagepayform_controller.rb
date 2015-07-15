@@ -4,10 +4,12 @@ module Spree
     skip_before_filter :verify_authenticity_token, :only => [:comeback, :comeback_s2s]
 
     def show
+
+
       if params[:payment_method_id] and Spree::PaymentMethod.exists? params[:payment_method_id]
         @payment_method = Spree::PaymentMethod.find params[:payment_method_id]
       else
-        flash[:error] = "ERROR, parameter payment_method_id wrong, the method of payment id=#{params[:payment_method_id]} non esiste !"
+        flash[:error] = "ERROR, parameter payment_method_id wrong, the method of payment id=#{params[:payment_method_id]} does not exist !"
         redirect_to checkout_state_url(:payment)
       end
 
@@ -17,7 +19,7 @@ module Spree
       if params[:order_id] and Spree::Order.exists? params[:order_id]
         @order = Spree::Order.find params[:order_id]
       else
-        flash[:error] = "ERROR, parameter payment_method_id wrong, the method of payment id=#{params[:order_id]} non esiste !"
+        flash[:error] = "ERROR, parameter order id wrong, #{params[:order_id]} does not exist !"
         redirect_to checkout_state_url(:payment)
       end
 
@@ -36,9 +38,9 @@ module Spree
 
 
       # :amount, :currency, :test, :credential2, :credential3, :credential4, :country, :account_name, :transaction_type
-      spf = Spree::BillingIntegration::Sagepayform.new()
+      spf = Spree::BillingIntegration::SagepayformV3.new()
 
-      spfh = ActiveMerchant::Billing::Integrations::SagePayForm::Helper.new(@order, @payment_method.preferred_login)
+      spfh = ActiveMerchant::Billing::Integrations::SagePayFormV3::Helper.new(@order, @payment_method.preferred_login)
 
       #
       spfh.add_field("EncryptKey", @payment_method.preferred_encryption_key)
@@ -93,7 +95,7 @@ module Spree
                                 :address2 => @order.ship_address.address2,
                                 :state => '',
                                 :zip => @order.ship_address.zipcode,
-                                :country  => @order.ship_address.country.iso
+                                :country => @order.ship_address.country.iso
                             })
 
       spfh.add_field("DeliverySurname", @order.ship_address.lastname)
@@ -139,17 +141,16 @@ module Spree
 
       # raise spfh.shipping_address_set
 
+      # raise 'sdfsdf'
+
       redirect_to spf_url
     end
 
     def get_enc_string
-
-        parts = fields.map { |k, v| "#{k}=#{sanitize(k, v)}" unless v.nil? }.compact.shuffle
-        parts.unshift(sage_encrypt_salt(key.length, key.length * 2))
-        sage_encrypt(parts.join('&'), key)
-
-end
-
+      parts = fields.map { |k, v| "#{k}=#{sanitize(k, v)}" unless v.nil? }.compact.shuffle
+      parts.unshift(sage_encrypt_salt(key.length, key.length * 2))
+      sage_encrypt(parts.join('&'), key)
+    end
 
     def service_url(payment_method)
       mode = payment_method.preferred_server
