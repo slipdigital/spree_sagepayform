@@ -157,11 +157,11 @@ module Spree
 
       # raise payment_method.preferred_server
       case mode
-        when "production"
+        when 'production'
           'https://live.sagepay.com/gateway/service/vspform-register.vsp'
-        when "test"
+        when 'test'
           'https://test.sagepay.com/gateway/service/vspform-register.vsp'
-        when "simulate"
+        when 'simulate'
           'https://test.sagepay.com/Simulator/VSPFormGateway.asp'
         else
           raise StandardError, "Integration mode set to an invalid value: #{mode}"
