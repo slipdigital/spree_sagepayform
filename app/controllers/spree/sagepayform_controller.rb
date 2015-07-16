@@ -33,7 +33,7 @@ module Spree
 
       # Update Payment info
       payment.state = "pending"
-      payment.source_type = "Spree::BillingIntegration::Sagepayform"
+      payment.source_type = "Spree::BillingIntegration::SagepayformV3"
       payment.save
 
 
