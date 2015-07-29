@@ -23,7 +23,7 @@ Spree::CheckoutController.class_eval do
     @order = Spree::Order.find(decrypted_data["VendorTxCode"])
 
     if @order
-      unless @order.payments.where(:source_type => 'Spree::BillingIntegration::Sagepayform').present?
+      unless @order.payments.where(:source_type => 'Spree::BillingIntegration::SagepayformV3').present?
 
         # skrill_transaction = SkrillTransaction.new
 
