@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_sagepayform'
-  s.version     = '1.2.0.13'
+  s.version     = '1.2.14'
   s.summary     = 'Spree Sagepay Forms integration'
   s.description = 'Payment adapert for spree sagepay'
   s.required_ruby_version = '>= 1.8.7'

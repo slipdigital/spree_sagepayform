@@ -46,7 +46,7 @@ Spree::CheckoutController.class_eval do
       end
 
       # Check Payments and mark as paid if matches
-      payment = @order.payments.where(:source_type => 'Spree::BillingIntegration::Sagepayform', :state => "pending").first!
+      payment = @order.payments.where(:source_type => 'Spree::BillingIntegration::SagepayformV3', :state => "pending").first!
 
       if payment
         payment_db = Spree::Payment.find(payment.id)
